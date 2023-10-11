@@ -10,13 +10,64 @@ function generatePassword($length) {
     return $randomPassword;
 }
 
-$password = '';
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (!empty($_GET["length"])) {
-        $length = $_GET["length"];
-        if (is_numeric($length)) {
-            $password = generatePassword($length);
+function checkPassword($password) {
+    // Definisci i criteri che la password deve soddisfare
+    $minLength = 9;
+    $requireUppercase = true;
+    $requireLowercase = true;
+    $requireNumber = true;
+    $requireSymbol = true;
+    
+    // Controlla la lunghezza della password
+    if (strlen($password) < $minLength) {
+        return false;
+    }
+
+    // Controlla la presenza di lettere maiuscole
+    if ($requireUppercase && !preg_match('/[A-Z]/', $password)) {
+        return false;
+    }
+
+    // Controlla la presenza di lettere minuscole
+    if ($requireLowercase && !preg_match('/[a-z]/', $password)) {
+        return false;
+    }
+
+    // Controlla la presenza di numeri
+    if ($requireNumber && !preg_match('/[0-9]/', $password)) {
+        return false;
+    }
+
+    // Controlla la presenza di simboli
+    if ($requireSymbol && !preg_match('/[\W]/', $password)) {
+        return false;
+    }
+    
+    // Se tutti i controlli passano, la password è valida
+    return true;
+}
+
+$message = '';
+
+if (isset($_GET['length'])) {
+    $length = $_GET['length'];
+    
+    // Controlla se il campo di input è vuoto
+    if ($length == '') {
+        $message = "Nessun parametro valido inserito.";
+    } else {
+        // Genera una password casuale
+        $password = generatePassword($length);
+        
+        // Controlla se la password soddisfa i criteri
+        if (checkPassword($password)) {
+            $message = "La password generata è Corretta";
+        } else {
+            $message = "<span style='color:red;'>La password generata non soddisfa i criteri. Riprova.</span>";
         }
     }
+} else {
+    $message = "Nessun parametro valido inserito.";
 }
+
 ?>

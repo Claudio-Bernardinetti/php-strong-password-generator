@@ -14,6 +14,12 @@
             <h1 style="color: gray;">Strong Password Generator</h1>
             <h2 style="color: white;">Genera una password sicura</h2>
         </div>
+        <div class="d-flex rounded p-2 px-5" style="height: 50px ; background-color:aquamarine;">
+        <?php
+        include 'functions.php';
+         echo $message; 
+         ?>
+         </div>
         <div class="container flex-wrap bg-light mt-2 rounded p-5">
             <form method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
                 <div class="d-flex justify-content-between">
@@ -24,11 +30,10 @@
                 </div>
                 <?php
 
-                include 'functions.php';
-
-                if (!empty($password)) {
+                if (!empty($password) && strlen($password) >= 9) {
                     echo "<p>Password generata: " . $password . "</p>";
                 }
+
                 ?>
                 <button class="btn btn-primary" type="submit" value="Genera">Invia</button>
                 <button class="btn btn-secondary" type="submit" value="Genera">Annulla</button>
