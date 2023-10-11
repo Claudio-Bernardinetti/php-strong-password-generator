@@ -1,5 +1,5 @@
 <?php
-
+session_start(); 
 include 'functions.php';
 
 $message = '';
@@ -16,7 +16,9 @@ if (isset($_GET['length'])) {
         
         // Controlla se la password soddisfa i criteri
         if (checkPassword($password)) {
-            $message = "<span style='color:white;'>La password generata è Corretta</span>";
+            $_SESSION['password'] = $password;
+            header('Location: password.php');
+            exit();
         } else {
             $message = "<span style='color:red;'>La password generata non soddisfa i criteri. Riprova.</span>";
         }
@@ -43,9 +45,8 @@ if (isset($_GET['length'])) {
             <h1 style="color: gray;">Strong Password Generator</h1>
             <h2 style="color: white;">Genera una password sicura</h2>
         </div>
-        <div class="d-flex rounded p-2 px-5" style="height: 50px ; background-color:aquamarine;">
+        <div class="d-flex align-items-center rounded mt-3 p-2 px-5" style="height: 50px ; background-color:aqua;">
         <?php
-        
          echo $message; 
          ?>
          </div>
@@ -65,7 +66,7 @@ if (isset($_GET['length'])) {
 
                 ?>
                 <button class="btn btn-primary" type="submit" value="Genera">Invia</button>
-                <button class="btn btn-secondary" type="submit" value="Genera">Annulla</button>
+                <button class="btn btn-secondary" type="submit" value="Annulla" onclick="document.getElementById('length').value = ''">Annulla</button>
             </form>
         </div>
     </div>
