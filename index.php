@@ -1,3 +1,32 @@
+<?php
+
+include 'functions.php';
+
+$message = '';
+
+if (isset($_GET['length'])) {
+    $length = $_GET['length'];
+    
+    // Controlla se il campo di input è vuoto
+    if ($length == '') {
+        $message = "Nessun parametro inserito.";
+    } else {
+        // Genera una password casuale
+        $password = generatePassword($length);
+        
+        // Controlla se la password soddisfa i criteri
+        if (checkPassword($password)) {
+            $message = "<span style='color:white;'>La password generata è Corretta</span>";
+        } else {
+            $message = "<span style='color:red;'>La password generata non soddisfa i criteri. Riprova.</span>";
+        }
+    }
+} else {
+    $message = "Nessun parametro valido inserito.";
+} 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +45,7 @@
         </div>
         <div class="d-flex rounded p-2 px-5" style="height: 50px ; background-color:aquamarine;">
         <?php
-        include 'functions.php';
+        
          echo $message; 
          ?>
          </div>
@@ -25,7 +54,7 @@
                 <div class="d-flex justify-content-between">
                     <label for="length">Lunghezza della password:</label><br>
                     <div class="col-3">
-                     <input type="text" class="form-control" id="length" name="length" value=""><br>
+                     <input type="text" class="form-control" id="length" name="length" value="">
                     </div>
                 </div>
                 <?php

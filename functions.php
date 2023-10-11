@@ -47,27 +47,4 @@ function checkPassword($password) {
     return true;
 }
 
-$message = '';
-
-if (isset($_GET['length'])) {
-    $length = $_GET['length'];
-    
-    // Controlla se il campo di input è vuoto
-    if ($length == '') {
-        $message = "Nessun parametro valido inserito.";
-    } else {
-        // Genera una password casuale
-        $password = generatePassword($length);
-        
-        // Controlla se la password soddisfa i criteri
-        if (checkPassword($password)) {
-            $message = "La password generata è Corretta";
-        } else {
-            $message = "<span style='color:red;'>La password generata non soddisfa i criteri. Riprova.</span>";
-        }
-    }
-} else {
-    $message = "Nessun parametro valido inserito.";
-}
-
 ?>
